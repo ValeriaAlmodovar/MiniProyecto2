@@ -4,7 +4,7 @@ public class Player2Controller : MonoBehaviour
 {
     private float speed = 20f;
     private float turnSpeed = 45f;
-    private float jumpSpeed = 20f;
+    // private float jumpSpeed = 20f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
