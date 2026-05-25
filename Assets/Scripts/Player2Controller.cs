@@ -2,31 +2,98 @@ using UnityEngine;
 
 public class Player2Controller : MonoBehaviour
 {
-    private float speed = 20f;
-    private float turnSpeed = 45f;
-    // private float jumpSpeed = 20f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;
 
+    private bool movementKeyPressed;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
-    public float horizontalInput = 0;
-    public float forwardInput = 0;
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetKey(KeyCode.LeftArrow))
-            horizontalInput = -1;
-        if(Input.GetKey(KeyCode.RightArrow))
-            horizontalInput = 1;
-        if(Input.GetKey(KeyCode.UpArrow))
-            forwardInput = 1;
-        if(Input.GetKey(KeyCode.DownArrow))
-            forwardInput = -1;
-
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+        ResetCar();
+        Move();
+        Turn();
     }
+
+    private void Move()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            if (speed < maxSpeed)
+            {
+                speed += acceleration * Time.deltaTime;
+            }
+            rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        }
         
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            if (speed > (-1 * maxSpeed))
+            {
+                speed -= acceleration * Time.deltaTime;
+            }
+            rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        }
+        movementKeyPressed = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow);
+        if (movementKeyPressed) return;
+        if (speed >= 0)
+        {
+            speed -= (1.5f * acceleration) * Time.deltaTime;
+        }
+
+        if (speed <= 0)
+        {
+            speed += (1.5f * acceleration) * Time.deltaTime;
+        }
+        rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        if (speed < 0.2 && speed > -0.2) speed = 0;
+    }
+
+    private void Turn()
+    {
+        if (speed < 0.2 && speed > -0.2) return;
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rb.transform.Rotate(Vector3.down * (turnSpeed * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.transform.Rotate(Vector3.up * (turnSpeed * Time.deltaTime));
+        }
+    }
+
+    private void ResetCar()
+    {
+        movementKeyPressed = 
+            Input.GetKey(KeyCode.UpArrow) || 
+            Input.GetKey(KeyCode.LeftArrow) || 
+            Input.GetKey(KeyCode.RightArrow) || 
+            Input.GetKey(KeyCode.DownArrow);
+        
+        if (!movementKeyPressed && Input.GetKeyDown(KeyCode.P))
+        {
+            speed = 0f;
+            rb.transform.position = new Vector3(10f, 0f, 0f);
+            rb.rotation = Quaternion.Euler(0f, 0f, 0f);
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+private void OnCollisionEnter(Collision collision)
+{
+    if (!collision.gameObject.CompareTag("Ball")) return;
+    Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
+    Vector3 hitDirection = (collision.transform.position - transform.position).normalized;
+    float force = 10f;
+    ballRb.AddForce(hitDirection * force, ForceMode.Impulse);
+}
 }

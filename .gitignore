@@ -1,4 +1,26 @@
+# Visual Studio / Rider / IDE files
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+*.suo
+
+# Build / generated files
+obj/
+bin/
+
+# Unity generated folders
 Library/
-Logs/
 Temp/
+Logs/
 UserSettings/
+
+# Unity cache
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
