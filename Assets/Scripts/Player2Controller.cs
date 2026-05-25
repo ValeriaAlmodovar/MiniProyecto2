@@ -104,7 +104,7 @@ public class Player2Controller : MonoBehaviour
         if (!collision.gameObject.CompareTag("Ball")) return;
         Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
         Vector3 hitDirection = (collision.transform.position - transform.position).normalized;
-        float force = 10f;
+        float force = 8f;
         ballRb.AddForce(hitDirection * force, ForceMode.Impulse);
     }
 }
