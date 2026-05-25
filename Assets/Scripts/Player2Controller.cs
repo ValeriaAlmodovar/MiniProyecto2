@@ -14,6 +14,7 @@ public class Player2Controller : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0f, -0.5f, 0f);
     }
 
     private void Update()
