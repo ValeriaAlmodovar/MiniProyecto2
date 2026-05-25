@@ -2,51 +2,41 @@ using UnityEngine;
 
 public class Player2Controller : MonoBehaviour
 {
-<<<<<<< Updated upstream
     private float speed = 20f;
     private float turnSpeed = 45f;
-    private float jumpSpeed = 20f;
+    // private float jumpSpeed = 20f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-=======
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private float speed;
-    [SerializeField] private float turnSpeed;
->>>>>>> Stashed changes
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    public float horizontalInput = 0;
+    public float forwardInput = 0;
+    // Update is called once per frame
+    void Update()
     {
-        Move();
-        Turn();
-    }
+        if(Input.GetKey(KeyCode.LeftArrow))
+            horizontalInput = -1;
+        if(Input.GetKey(KeyCode.RightArrow))
+            horizontalInput = 1;
+        if(Input.GetKey(KeyCode.UpArrow))
+            forwardInput = 1;
+        if(Input.GetKey(KeyCode.DownArrow))
+            forwardInput = -1;
 
-    private void Move()
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+    }
+    void OnCollisionEnter(Collision collision)
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (collision.gameObject.CompareTag("Ball"))
         {
-            rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            rb.transform.Translate(Vector3.back * (speed * Time.deltaTime));
+            Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
+            Vector3 hitDirection = (collision.transform.position - transform.position).normalized;
+            float force = 10f;
+            ballRb.AddForce(hitDirection * force, ForceMode.Impulse);
         }
     }
-
-    private void Turn()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            rb.transform.Rotate(Vector3.down * (turnSpeed * Time.deltaTime));
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            rb.transform.Rotate(Vector3.up * (turnSpeed * Time.deltaTime));
-        }
-    }
+        
 }
