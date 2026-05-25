@@ -2,31 +2,51 @@ using UnityEngine;
 
 public class Player2Controller : MonoBehaviour
 {
+<<<<<<< Updated upstream
     private float speed = 20f;
     private float turnSpeed = 45f;
     private float jumpSpeed = 20f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+=======
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float speed;
+    [SerializeField] private float turnSpeed;
+>>>>>>> Stashed changes
 
-    }
-
-    public float horizontalInput = 0;
-    public float forwardInput = 0;
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        if(Input.GetKey(KeyCode.LeftArrow))
-            horizontalInput = -1;
-        if(Input.GetKey(KeyCode.RightArrow))
-            horizontalInput = 1;
-        if(Input.GetKey(KeyCode.UpArrow))
-            forwardInput = 1;
-        if(Input.GetKey(KeyCode.DownArrow))
-            forwardInput = -1;
-
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+        rb = GetComponent<Rigidbody>();
     }
-        
+
+    private void FixedUpdate()
+    {
+        Move();
+        Turn();
+    }
+
+    private void Move()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rb.transform.Translate(Vector3.back * (speed * Time.deltaTime));
+        }
+    }
+
+    private void Turn()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rb.transform.Rotate(Vector3.down * (turnSpeed * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.transform.Rotate(Vector3.up * (turnSpeed * Time.deltaTime));
+        }
+    }
 }

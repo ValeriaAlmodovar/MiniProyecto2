@@ -1548,15 +1548,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436868, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.064458
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 436868, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00000031507662
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436868, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.038775
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436868, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1586,6 +1586,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+    - target: {fileID: 2359104, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313442307395238052, guid: 70bf34f6c25c948458f254e87188b00b, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
+>>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1641,9 +1652,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a937df22c7c34496935fd984da329c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+<<<<<<< Updated upstream
   horizontalInput: 0
   forwardInput: 0
 --- !u!1001 &251672338
+=======
+  rb: {fileID: 227231102}
+  speed: 0
+  maxSpeed: 20
+  turnSpeed: 45
+  acceleration: 10
+  jumpForce: 0
+  gravity: 0
+--- !u!1001 &407365645
+>>>>>>> Stashed changes
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -3761,7 +3783,7 @@ Transform:
   m_GameObject: {fileID: 534669902}
   serializedVersion: 2
   m_LocalRotation: {x: 0.04361937, y: -0.0017217866, z: 0.00007516762, w: 0.9990468}
-  m_LocalPosition: {x: 6.1, y: 2, z: -13.1}
+  m_LocalPosition: {x: 10, y: 6, z: -11.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5790,7 +5812,7 @@ Transform:
   m_GameObject: {fileID: 849484047}
   serializedVersion: 2
   m_LocalRotation: {x: 0.04361937, y: -0.0017217866, z: 0.00007516762, w: 0.9990468}
-  m_LocalPosition: {x: -6.2383003, y: 1.86, z: -13.1}
+  m_LocalPosition: {x: -10, y: 6, z: -11.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12559,15 +12581,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 428284, guid: 09082afec7b5e824ca611a0cc3264bcd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.06
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 428284, guid: 09082afec7b5e824ca611a0cc3264bcd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00000070827105
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 428284, guid: 09082afec7b5e824ca611a0cc3264bcd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.089528
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 428284, guid: 09082afec7b5e824ca611a0cc3264bcd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12621,7 +12643,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991882816}
   serializedVersion: 5
-  m_Mass: 1000
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -12652,10 +12674,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3de0a01447748bc9a648e7e6864e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player2Controller
+<<<<<<< Updated upstream
   horizontalInput: 0
   forwardInput: 0
 --- !u!1001 &2047066640
 PrefabInstance:
+=======
+  rb: {fileID: 1991882817}
+  speed: 20
+  turnSpeed: 45
+--- !u!1 &2076234303
+GameObject:
+>>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
