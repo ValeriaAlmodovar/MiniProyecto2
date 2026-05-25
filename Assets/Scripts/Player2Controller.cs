@@ -15,6 +15,7 @@ public class Player2Controller : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0f, -0.5f, 0f);
     }
 
     private void Update()
@@ -93,7 +94,7 @@ private void OnCollisionEnter(Collision collision)
     if (!collision.gameObject.CompareTag("Ball")) return;
     Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
     Vector3 hitDirection = (collision.transform.position - transform.position).normalized;
-    float force = 10f;
+    float force = 8f;
     ballRb.AddForce(hitDirection * force, ForceMode.Impulse);
 }
 }

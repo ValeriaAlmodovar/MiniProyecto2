@@ -3,6 +3,7 @@
 .idea/
 *.csproj
 *.sln
+*.slnx
 *.user
 *.suo
 
