@@ -2,31 +2,91 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 35f;
-    private float turnSpeed = 45f;
-    private float jumpSpeed = 20f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;
 
+    private bool movementKeyPressed;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
-    public float horizontalInput = 0;
-    public float forwardInput = 0;
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetKey(KeyCode.A))
-            horizontalInput = -1;
-        if(Input.GetKey(KeyCode.D))
-            horizontalInput = 1;
-        if(Input.GetKey(KeyCode.W))
-            forwardInput = 1;
-        if(Input.GetKey(KeyCode.S))
-            forwardInput = -1;
+        ResetCar();
+        Move();
+        Turn();
+    }
 
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+    private void Move()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            if (speed < maxSpeed)
+            {
+                speed += acceleration * Time.deltaTime;
+            }
+            rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        }
+        
+        if (Input.GetKey(KeyCode.S))
+        {
+            if (speed > (-1 * maxSpeed))
+            {
+                speed -= acceleration * Time.deltaTime;
+            }
+            rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        }
+        movementKeyPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S);
+        if (movementKeyPressed) return;
+        if (speed >= 0)
+        {
+            speed -= (1.5f * acceleration) * Time.deltaTime;
+        }
+
+        if (speed <= 0)
+        {
+            speed += (1.5f * acceleration) * Time.deltaTime;
+        }
+        rb.transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        if (speed < 0.2 && speed > -0.2) speed = 0;
+    }
+
+    private void Turn()
+    {
+        if (speed < 0.2 && speed > -0.2) return;
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.transform.Rotate(Vector3.down * (turnSpeed * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            rb.transform.Rotate(Vector3.up * (turnSpeed * Time.deltaTime));
+        }
+    }
+
+    private void ResetCar()
+    {
+        movementKeyPressed = 
+            Input.GetKey(KeyCode.W) || 
+            Input.GetKey(KeyCode.A) || 
+            Input.GetKey(KeyCode.D) || 
+            Input.GetKey(KeyCode.S);
+        
+        if (!movementKeyPressed && Input.GetKeyDown(KeyCode.R))
+        {
+            speed = 0f;
+            rb.transform.position = new Vector3(10f, 0f, 0f);
+            rb.rotation = Quaternion.Euler(0f, 0f, 0f);
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
