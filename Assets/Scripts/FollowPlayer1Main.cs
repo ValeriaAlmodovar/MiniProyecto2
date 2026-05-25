@@ -2,24 +2,14 @@ using UnityEngine;
 
 public class FollowPlayer1Main : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     public GameObject player;
-    private Vector3 offset = new Vector3(0, 5, -12);
+    private Vector3 offset = new Vector3(0, 6, -11.5f);
+    private Vector3 rotatedOffset = new Vector3(0, 6, -11.5f);
 
-    void Update()
+    private void LateUpdate()
     {
-        
-    }
-
-    void LateUpdate()
-    {
-        transform.position = player.transform.position + offset;
-        
+        rotatedOffset = player.transform.rotation * offset;
+        transform.position = player.transform.position + rotatedOffset;
+        transform.LookAt(player.transform);
     }
 }
