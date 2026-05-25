@@ -28,5 +28,15 @@ public class Player2Controller : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
         transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
+            Vector3 hitDirection = (collision.transform.position - transform.position).normalized;
+            float force = 10f;
+            ballRb.AddForce(hitDirection * force, ForceMode.Impulse);
+        }
+    }
         
 }

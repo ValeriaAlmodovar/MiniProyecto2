@@ -3,7 +3,7 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public string playerScore;
+    public int playerScored;
     void Start()
     {
         
@@ -19,8 +19,8 @@ public class Goal : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            playerScore += 1;
-            Debug.Log(playerScored +"Player Score: " + playerScore);
+            Debug.Log("Choco con la bola");
+            GameManager.instance.AddScore(playerScored);
             Destroy(collision.gameObject);
         }
     }
