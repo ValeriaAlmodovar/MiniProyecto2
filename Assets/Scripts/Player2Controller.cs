@@ -62,13 +62,28 @@ public class Player2Controller : MonoBehaviour
     private void Turn()
     {
         if (speed < 0.2 && speed > -0.2) return;
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (speed >= 0)
         {
-            rb.transform.Rotate(Vector3.down * (turnSpeed * Time.deltaTime));
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                rb.transform.Rotate(Vector3.down * (turnSpeed * Time.deltaTime));
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                rb.transform.Rotate(Vector3.up * (turnSpeed * Time.deltaTime));
+            }
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (speed < 0)
         {
-            rb.transform.Rotate(Vector3.up * (turnSpeed * Time.deltaTime));
+            const int inverse = -1;
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                rb.transform.Rotate(Vector3.down * (inverse * turnSpeed * Time.deltaTime));
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                rb.transform.Rotate(Vector3.up * (inverse * turnSpeed * Time.deltaTime));
+            }
         }
     }
 
@@ -83,8 +98,8 @@ public class Player2Controller : MonoBehaviour
         if (!movementKeyPressed && Input.GetKeyDown(KeyCode.P))
         {
             speed = 0f;
-            rb.transform.position = new Vector3(0f, 0f, 10f);
-            rb.rotation = Quaternion.Euler(0f, 0f, 0f);
+            rb.transform.position = new Vector3(0f, 0f, 158f);
+            rb.rotation = Quaternion.Euler(0f, 180f, 0f);
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
@@ -93,7 +108,7 @@ public class Player2Controller : MonoBehaviour
     private void Jump()
     {
         if (rb.position.y > 0.1) return;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -103,8 +118,15 @@ public class Player2Controller : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Ball")) return;
         Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
+        if (ballRb == null) return;
+        
         Vector3 hitDirection = (collision.transform.position - transform.position).normalized;
-        float force = 8f;
+        hitDirection.y = 0.35f;
+        hitDirection.Normalize();
+        
+        float carSpeed = Mathf.Abs(speed);
+        float force = 8f + carSpeed * 0.5f;
+        
         ballRb.AddForce(hitDirection * force, ForceMode.Impulse);
     }
 }
